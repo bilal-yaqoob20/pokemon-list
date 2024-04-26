@@ -1,24 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense, lazy } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+const PokeminList = lazy(() => import('./components/pokemonList'))
+const PokemonDetails = lazy(() => import('./components/pokemonDetails'))
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Suspense fallback={<div>Loading...</div>}><PokeminList/></Suspense>} />
+        <Route path="details/:index" element={<Suspense fallback={<div>Loading...</div>}><PokemonDetails/></Suspense>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
